@@ -1,0 +1,110 @@
+Project  Direction,  10-Day  Plan,  and  Weekly  Reporting  
+For  our  Network  Packet  Routing  Simulator,  the  aim  is  to  go  beyond  a  standard  assignment  and  
+build
+ 
+an
+ 
+interactive,
+ 
+web-based
+ 
+tool
+ 
+that
+ 
+visualizes
+ 
+network
+ 
+topologies,
+ 
+Minimum
+ 
+Spanning
+ 
+Trees
+ 
+(MST),
+ 
+and
+ 
+dynamic
+ 
+routing.
+ 
+Below  is  a  suggested  10-day  development  roadmap  using  Python,  Streamlit,  and  NetworkX.  This  
+is
+ 
+only
+ 
+a
+ 
+reference
+ 
+to
+ 
+help
+ 
+you
+ 
+structure
+ 
+your
+ 
+work.
+ 
+ You  are  completely  free  to:  
+-  Choose  your  own  approach  
+-  Use  different  algorithms  
+-  Work  with  any  tech  stack  
+  
+The  ultimate  goal  is  to  build  something  meaningful,  well-implemented,  and  impressive.  
+10-Day  Development  Sprint  
+  
+Milestone  1:  Core  Engine  (Days  1–3)  
+-  Graph  setup  using  NetworkX  
+-  Implement  MST  (Prim/Kruskal)  
+-  Implement  shortest  path  (Dijkstra)  
+ Outcome:  Working  backend  with  core  algorithms  
+  
+Milestone  2:  Interface  Setup  (Days  4–6)  
+-  Build  UI  using  Streamlit  (or  your  choice)  
+-  Add  inputs  (nodes,  edges,  source/destination)  
+-  Visualize  graph  
+ Outcome:  Interactive  UI  with  graph  visualization  
+   
+
+Milestone  3:  Visualization  &  Enhancements  (Days  7–8)  
+-  Highlight  MST  and  shortest  path  
+-  Add  dynamic  updates  /  optional  features  
+ Outcome:  Enhanced  and  visually  appealing  simulator  
+ 
+Milestone  4:  Finalization  (Days  9–10)  
+-  Testing  and  edge  cases  
+-  Code  cleanup  and  documentation  
+-  Optional  deployment  
+ Outcome:  Final  working  project  ready  for  demo  
+  
+Weekly  Progress  Report  (Mandatory)  
+ 1.  Work  Completed  This  Week  
+-  Features/algorithms  implemented  
+-  Screenshots  (if  applicable)  
+  
+2.  Current  Status  
+-  What  is  working  
+-  What  is  pending  
+  
+3.  Challenges  Faced  
+-  Technical  or  conceptual  issues  
+  
+4.  Plan  for  Next  Week  
+-  Tasks  and  goals  
+
+5.  Contribution  of  Each  Member  
+-  Work  done  by  each  member  
+  
+6.  Additional  Notes  (Optional)  
+-  Ideas  or  improvements  
+ 
+ 
+ 
