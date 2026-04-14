@@ -79,12 +79,12 @@
 
 | Member | Contribution |
 |--------|-------------|
-| *[Name 1]* | *Core engine implementation, MST & Dijkstra algorithms, topology generators* |
-| *[Name 2]* | *Streamlit UI development, sidebar controls, algorithm panels* |
-| *[Name 3]* | *Visualization engine (PyVis + Matplotlib), color scheme, UI polish* |
-| *[Name 4]* | *Testing, documentation, weekly report, README* |
+| *[Name ]* | *Core engine implementation, MST & Dijkstra algorithms, topology generators* |
+| *[Name ]* | *Streamlit UI development, sidebar controls, algorithm panels* |
+| *[Name ]* | *Visualization engine (PyVis + Matplotlib), color scheme, UI polish* |
+| *[Name ]* | *Testing, documentation, weekly report, README* |
 
-*(Update with actual team member names and contributions)*
+*( will be updated with team member names and contributions soon.......... )*
 
 ---
 
