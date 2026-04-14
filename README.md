@@ -1,4 +1,4 @@
-# 🌐 Network Packet Routing Simulator
+#  Network Packet Routing Simulator
 
 An interactive, web-based tool that visualizes network topologies, computes **Minimum Spanning Trees (MST)**, and simulates **dynamic packet routing** using Dijkstra's algorithm — built with Python, Streamlit, NetworkX, and PyVis.
 
@@ -8,7 +8,7 @@ An interactive, web-based tool that visualizes network topologies, computes **Mi
 
 ---
 
-## 🚀 Features
+##  Features
 
 | Feature | Description |
 |---------|-------------|
@@ -24,7 +24,7 @@ An interactive, web-based tool that visualizes network topologies, computes **Mi
 
 ---
 
-## 📦 Installation
+##  Installation
 
 ### Prerequisites
 - Python 3.9 or higher
@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 ---
 
-## ▶️ Running the Application
+##  Running the Application
 
 ```bash
 streamlit run app.py
@@ -53,7 +53,7 @@ The app will open at `http://localhost:8501` in your default browser.
 
 ---
 
-## 🏗️ Project Architecture
+##  Project Architecture
 
 ```
 ├── app.py                  # Main Streamlit UI application
@@ -68,7 +68,7 @@ The app will open at `http://localhost:8501` in your default browser.
 
 ---
 
-## 🧠 Algorithms Implemented
+##  Algorithms Implemented
 
 ### 1. Minimum Spanning Tree (MST)
    - **Kruskal's Algorithm**: Sorts all edges by weight and greedily builds the MST by picking the smallest edge that doesn't create a cycle (Union-Find approach).
@@ -86,7 +86,7 @@ The app will open at `http://localhost:8501` in your default browser.
 
 ---
 
-## 🎨 Topology Types
+##  Topology Types
 
 | Topology | Visual | Description |
 |----------|--------|-------------|
@@ -98,7 +98,7 @@ The app will open at `http://localhost:8501` in your default browser.
 
 ---
 
-## 📊 Usage Guide
+##  Usage Guide
 
 1. **Generate a Topology**: Use the sidebar dropdown to pick a preset (Ring, Star, Mesh, Tree, Random) and hit "Generate Topology."
 2. **Customize**: Add/remove routers and links manually using the sidebar controls.
@@ -110,7 +110,7 @@ The app will open at `http://localhost:8501` in your default browser.
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 Run the unit tests to verify algorithm correctness:
 
@@ -120,7 +120,7 @@ python -m pytest tests/ -v
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Component | Technology |
 |-----------|-----------|
@@ -133,16 +133,17 @@ python -m pytest tests/ -v
 
 ---
 
-## 👥 Team
+##  Team
 
 | Member | Role |
 |--------|------|
-| *[Name]* | *[Role/Contribution]* |
-| *[Name]* | *[Role/Contribution]* |
-
+| *Om Gupta* | *[Role/Contribution]* |
+| *Tirunagari Bhuvan* | *[Role/Contribution]* |
+| *Gyan Vardhan Chauhan* | *[Role/Contribution]* |
+| *Nitesh* | *[Role/Contribution]* |
 ---
 
-## 📄 License
+##  License
 
 This project is developed as an academic project. See the project documentation for details.
 
