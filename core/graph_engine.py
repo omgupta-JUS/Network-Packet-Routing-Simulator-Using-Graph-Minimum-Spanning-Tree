@@ -3,9 +3,9 @@ graph_engine.py - Core Graph Engine for the Network Packet Routing Simulator.
 
 This module provides the NetworkGraph class, which handles:
 - Adding/removing routers (nodes) and links (edges)
-- Minimum Spanning Tree (Kruskal/Prim)
+- Minimum Spanning Tree (Kruskal's /Prim's algorithms )
 - Shortest path (Dijkstra)
-- Preset topology generation
+- Preset topology generation (ring, star, mesh, tree, random)
 - Link failure simulation
 - Coordinate-based network generation (NEW FEATURE)
 """
@@ -19,6 +19,7 @@ from typing import Optional
 class NetworkGraph:
     """
     Wrapper around a networkx.Graph representing a network of routers.
+    connected by weighted links (representing latency, bandwidth cost, etc.).
     """
 
     def __init__(self):
@@ -30,13 +31,20 @@ class NetworkGraph:
     def add_router(self, router_id: str, label: str = "", **attrs) -> None:
         """
         Add a router (node) to the network.
+        Args:
+            router_id: Unique identifier for the router (e.g., "R1").
+            label: Human-readable label. Defaults to the router_id.
+            **attrs: Extra attributes such as x/y coordinates.
         """
         if not label:
             label = router_id
         self.graph.add_node(router_id, label=label, **attrs)
 
     def remove_router(self, router_id: str) -> None:
-        """Remove a router and its links."""
+        """Remove a router and its links.
+        Args:
+            router_id: Identifier of the router to remove.
+        """
         if router_id in self.graph:
             self.graph.remove_node(router_id)
 
@@ -83,7 +91,13 @@ class NetworkGraph:
     # -------------------- Edge (Link) Management --------------------
 
     def add_link(self, router_a: str, router_b: str, weight: float = 1.0, **attrs) -> None:
-        """Add a link between two routers."""
+        """Add a link (edge) between two routers.
+        Args:
+            router_a: First router ID.
+            router_b: Second router ID.
+            weight: Cost / latency of the link (must be > 0).
+            **attrs: Extra attributes (e.g., bandwidth).
+        """
         if router_a not in self.graph:
             self.add_router(router_a)
         if router_b not in self.graph:
@@ -91,18 +105,36 @@ class NetworkGraph:
         self.graph.add_edge(router_a, router_b, weight=weight, **attrs)
 
     def remove_link(self, router_a: str, router_b: str) -> None:
-        """Remove a link."""
+        """Remove a link between two routers (simulates link failure).
+
+        Args:
+            router_a: First router ID.
+            router_b: Second router I
+
+        
+        """
         if self.graph.has_edge(router_a, router_b):
             self.graph.remove_edge(router_a, router_b)
 
     def get_links(self) -> list:
-        """Return all links."""
+        """Return a list of all links as (router_a, router_b, weight) tuples."""
         return [(u, v, d.get("weight", 1.0)) for u, v, d in self.graph.edges(data=True)]
 
     # -------------------- MST (Minimum Spanning Tree) --------------------
 
     def compute_mst(self, algorithm: str = "kruskal") -> nx.Graph:
-        """Compute MST."""
+        """Compute MST.
+        Args:
+            algorithm: 'kruskal' or 'prim'. Defaults to 'kruskal'.
+
+        Returns:
+            A networkx.Graph representing the MST. Returns an empty graph if
+            the original graph has no edges.
+
+        Raises:
+            ValueError: If an unsupported algorithm name is given.
+          
+        """
         if algorithm not in ("kruskal", "prim"):
             raise ValueError("Unsupported MST algorithm")
 
@@ -112,6 +144,15 @@ class NetworkGraph:
         return nx.minimum_spanning_tree(self.graph, algorithm=algorithm, weight="weight")
 
     def get_mst_edges(self, algorithm: str = "kruskal") -> list:
+        """
+        Get the edges of the MST as a list of (u, v, weight) tuples.
+
+        Args:
+            algorithm: 'kruskal' or 'prim'.
+
+        Returns:
+            List of (router_a, router_b, weight) tuples forming the MST.
+        """
         mst = self.compute_mst(algorithm)
         return [(u, v, d.get("weight", 1.0)) for u, v, d in mst.edges(data=True)]
 
@@ -121,7 +162,17 @@ class NetworkGraph:
     # -------------------- Shortest Path (Dijkstra) --------------------
 
     def compute_shortest_path(self, source: str, target: str) -> tuple:
-        """Compute shortest path using Dijkstra."""
+        """Compute shortest path using Dijkstra.
+           Args:
+            source: Source router ID.
+            target: Destination router ID.
+
+        Returns:
+            A tuple (path, total_cost) where:
+              - path is an ordered list of router IDs from source to target.
+              - total_cost is the sum of edge weights along the path.
+            Returns ([], float('inf')) if no path exists.
+        """
         if source not in self.graph or target not in self.graph:
             return ([], float("inf"))
 
@@ -133,7 +184,10 @@ class NetworkGraph:
             return ([], float("inf"))
 
     def compute_all_shortest_paths(self, source: str) -> dict:
-        """Compute shortest paths from one node to all others."""
+        """Compute shortest paths from one node to all others.
+        Returns:
+            A dict mapping each target router to (path, cost).
+        """
         results = {}
         for node in self.graph.nodes():
             if node != source:
@@ -143,7 +197,22 @@ class NetworkGraph:
     # -------------------- Link Failure Simulation --------------------
 
     def simulate_link_failure(self, router_a: str, router_b: str) -> dict:
-        """Simulate link failure."""
+        """
+        Simulate a link failure between two routers and return the impact.
+
+        This temporarily removes the link, recomputes all-pairs shortest paths,
+        and then restores the link.
+
+        Args:
+            router_a: First router ID.
+            router_b: Second router ID.
+
+        Returns:
+            A dict with keys:
+              - 'removed_edge': (router_a, router_b, weight)
+              - 'new_mst_edges': MST edges after failure
+              - 'disconnected_pairs': list of (src, dst) pairs that became unreachable
+        """
         if not self.graph.has_edge(router_a, router_b):
             return {"error": "No link exists"}
 
