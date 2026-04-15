@@ -225,6 +225,69 @@ with st.sidebar:
         st.rerun()
 
     st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
+    
+    # ── Custom Coordinate-Based Input ──────────────────────────────────
+    st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-section"><b>📍 Custom Coordinate Network</b></div>', unsafe_allow_html=True)
+
+    node_input = st.text_area(
+        "Nodes (format: name x y)",
+        placeholder="A 10 20\nB 40 50\nC 70 10",
+        key="custom_nodes"
+    )
+
+    edge_input = st.text_area(
+        "Edges (format: A B)",
+        placeholder="A B\nB C\nA C",
+        key="custom_edges"
+    )
+
+    def parse_nodes(text):
+        nodes = []
+        for line in text.strip().split("\n"):
+            parts = line.strip().split()
+            if len(parts) == 3:
+                name, x, y = parts
+                nodes.append((name, float(x), float(y)))
+        return nodes
+
+    def parse_edges(text):
+        edges = []
+        for line in text.strip().split("\n"):
+            parts = line.strip().split()
+            if len(parts) == 2:
+                edges.append((parts[0], parts[1]))
+        return edges
+
+    if st.button("📍 Generate Custom Network", use_container_width=True):
+        try:
+            nodes = parse_nodes(node_input)
+            edges = parse_edges(edge_input)
+
+            if not nodes:
+                st.warning("Please enter valid node data.")
+            else:
+                net.build_from_coordinates(nodes, edges)
+
+                # Reset previous results
+                st.session_state.mst_edges = []
+                st.session_state.shortest_path = []
+                st.session_state.shortest_cost = 0
+                st.session_state.failed_edges = []
+                st.session_state.show_mst = False
+                st.session_state.show_sp = False
+                st.session_state.failure_report = None
+
+                st.success("✅ Custom network generated!")
+                st.rerun()
+
+        except Exception as e:
+            st.error(f"Error: {e}")
+        
+
+
+
+
 
     # ── Manual Node/Edge Addition ──────────────────────────────────────
     st.markdown('<div class="sidebar-section"><b>➕ Add Router</b></div>', unsafe_allow_html=True)
