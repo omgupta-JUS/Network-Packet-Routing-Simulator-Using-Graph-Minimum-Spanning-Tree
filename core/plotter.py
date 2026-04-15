@@ -228,8 +228,21 @@ class GraphPlotter:
             A matplotlib Figure object.
         """
         G = self.net_graph.graph
+
         fig, ax = plt.subplots(figsize=figsize, facecolor=COLORS["background"])
         ax.set_facecolor(COLORS["background"])
+
+        # Added grid to visualize coordinate system
+        # Space-style grid (blue/purple aesthetic)
+        ax.set_axisbelow(True)
+
+        # Major grid (purple)  
+        ax.grid(True, which="major", color="#7C4DFF", linestyle="--", linewidth=0.8, alpha=0.6)
+
+        # Minor grid (blue, lighter)
+        ax.minorticks_on()
+        ax.grid(True, which="minor", color="#40C4FF", linestyle=":", linewidth=0.6, alpha=0.4)
+        ax.tick_params(colors="#B0BEC5", labelsize=8)
 
         if G.number_of_nodes() == 0:
             ax.text(0.5, 0.5, "No routers in the network",
@@ -238,7 +251,25 @@ class GraphPlotter:
             ax.axis("off")
             return fig
 
-        pos = nx.spring_layout(G, seed=42, k=2)
+        # Uses coordinate-based positions if available
+        pos = nx.get_node_attributes(G, "pos")
+
+        # Fallback to spring layout if no coordinates are provided
+        if not pos:
+            pos = nx.spring_layout(G, seed=42, k=2)
+        else:
+            # Optional scaling for better visualization
+            pos = {k: (v[0]*10, v[1]*10) for k, v in pos.items()}
+        
+        # Set axis limits based on node positions
+        x_vals = [p[0] for p in pos.values()]
+        y_vals = [p[1] for p in pos.values()]
+
+        margin = 10
+
+        ax.set_xlim(min(x_vals) - margin, max(x_vals) + margin)
+        ax.set_ylim(min(y_vals) - margin, max(y_vals) + margin)
+
 
         # Build lookup sets
         mst_set = set()
@@ -311,8 +342,21 @@ class GraphPlotter:
 
         # Edge weight labels
         edge_labels = nx.get_edge_attributes(G, "weight")
-        nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels,
-                                      font_size=8, font_color="#CFD8DC", ax=ax)
+        nx.draw_networkx_edge_labels(
+            G,
+            pos,
+            edge_labels=edge_labels,
+            font_size=11,              # bigger text
+            font_color="#FFFFFF",      # bright white
+            font_weight="bold",        # thicker text
+            bbox=dict(                # background box for contrast
+                facecolor="#263238",  # same as background
+                edgecolor="none",
+                pad=0.5,
+                alpha=0.8
+            ),
+            ax=ax
+        )
 
         # Legend
         legend_items = [
@@ -328,7 +372,7 @@ class GraphPlotter:
         ax.legend(handles=legend_items, loc="upper left", fontsize=9,
                   facecolor="#37474F", edgecolor="#546E7A", labelcolor="white")
 
-        ax.axis("off")
+        ax.set_axis_on()
         ax.set_title("Network Topology", fontsize=16, color="white", pad=20)
         fig.tight_layout()
         return fig
