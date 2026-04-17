@@ -92,7 +92,7 @@ The app will open at `http://localhost:8501` in your default browser.
 |----------|--------|-------------|
 | **Ring** | ⭕ | Each router connects to exactly 2 neighbors in a circle |
 | **Star** | ⭐ | One central hub connects to all others |
-| **Mesh** | 🔗 | Every router connects to every other (full mesh) |
+| **Mesh** | 🔗 | Each router is directly connected to all others (full mesh topology) |
 | **Tree** | 🌳 | Hierarchical structure with a root and branching |
 | **Random** | 🎲 | Erdős–Rényi random graph (guaranteed connected) |
 
