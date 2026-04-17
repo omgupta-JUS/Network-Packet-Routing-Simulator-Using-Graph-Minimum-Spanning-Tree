@@ -23,10 +23,7 @@ matplotlib.use("Agg")  # non-interactive backend for Streamlit
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
-
-# ═══════════════════════════════════════════════════════════════════════
 # Color Palette
-# ═══════════════════════════════════════════════════════════════════════
 COLORS = {
     "node_default": "#4FC3F7",       # Light blue
     "node_source": "#66BB6A",        # Green
@@ -50,8 +47,7 @@ class GraphPlotter:
         """
         self.net_graph = net_graph
 
-    # ─── PyVis Interactive Rendering ────────────────────────────────────
-
+    # PyVis Interactive Rendering 
     def render_pyvis(
         self,
         mst_edges: list = None,

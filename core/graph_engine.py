@@ -26,8 +26,7 @@ class NetworkGraph:
         """Initialize an empty graph."""
         self.graph = nx.Graph()
 
-    # -------------------- Node (Router) Management --------------------
-
+    # Node (Router) Management 
     def add_router(self, router_id: str, label: str = "", **attrs) -> None:
         """
         Add a router (node) to the network.
@@ -52,7 +51,7 @@ class NetworkGraph:
         """Return sorted list of routers."""
         return sorted(self.graph.nodes())
 
-    # -------------------- NEW: Distance-Based Weights --------------------
+    # NEW: Distance-Based Weights 
 
     def assign_distance_weights(self):
         """
@@ -65,7 +64,7 @@ class NetworkGraph:
             dist = math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
             self.graph[u][v]["weight"] = round(dist, 2)
 
-    # -------------------- NEW: Coordinate-Based Builder --------------------
+    # NEW: Coordinate-Based Builder 
 
     def build_from_coordinates(self, nodes: list, edges: list) -> None:
         """
@@ -88,8 +87,7 @@ class NetworkGraph:
         # Compute weights automatically
         self.assign_distance_weights()
 
-    # -------------------- Edge (Link) Management --------------------
-
+    # Edge (Link) Management 
     def add_link(self, router_a: str, router_b: str, weight: float = 1.0, **attrs) -> None:
         """Add a link (edge) between two routers.
         Args:
@@ -120,7 +118,7 @@ class NetworkGraph:
         """Return a list of all links as (router_a, router_b, weight) tuples."""
         return [(u, v, d.get("weight", 1.0)) for u, v, d in self.graph.edges(data=True)]
 
-    # -------------------- MST (Minimum Spanning Tree) --------------------
+    # MST (Minimum Spanning Tree) 
 
     def compute_mst(self, algorithm: str = "kruskal") -> nx.Graph:
         """Compute MST.
@@ -159,7 +157,7 @@ class NetworkGraph:
     def get_mst_total_weight(self, algorithm: str = "kruskal") -> float:
         return sum(w for _, _, w in self.get_mst_edges(algorithm))
 
-    # -------------------- Shortest Path (Dijkstra) --------------------
+    # Shortest Path (Dijkstra) 
 
     def compute_shortest_path(self, source: str, target: str) -> tuple:
         """Compute shortest path using Dijkstra.
@@ -194,7 +192,7 @@ class NetworkGraph:
                 results[node] = self.compute_shortest_path(source, node)
         return results
 
-    # -------------------- Link Failure Simulation --------------------
+    #  Link Failure Simulation 
 
     def simulate_link_failure(self, router_a: str, router_b: str) -> dict:
         """
@@ -241,7 +239,7 @@ class NetworkGraph:
             "disconnected_pairs": disconnected,
         }
 
-    # -------------------- Topology Generators --------------------
+    #  Topology Generators 
 
     def generate_ring_topology(self, n=6, weight_range=(1, 10)):
         self.graph.clear()
@@ -292,7 +290,7 @@ class NetworkGraph:
                 if random.random() < edge_probability:
                     self.add_link(f"R{i}", f"R{j}", weight=random.randint(*weight_range))
 
-    # -------------------- Utility Methods --------------------
+    #  Utility Methods 
 
     def is_connected(self) -> bool:
         if self.graph.number_of_nodes() == 0:
