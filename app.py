@@ -30,7 +30,6 @@ from core.plotter import GraphPlotter
 # ═══════════════════════════════════════════════════════════════════════
 st.set_page_config(
     page_title="Network Packet Routing Simulator",
-    page_icon="🌐",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -42,117 +41,113 @@ st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-    /* Global font */
     html, body, [class*="css"] {
         font-family: 'Inter', sans-serif;
     }
 
-    /* Main header styling */
     .main-header {
-        background: linear-gradient(135deg, #0D47A1 0%, #1565C0 30%, #1E88E5 60%, #42A5F5 100%);
+        background: var(--secondary-background-color);
         padding: 1.5rem 2rem;
-        border-radius: 16px;
+        border-radius: 8px;
         margin-bottom: 1.5rem;
-        box-shadow: 0 8px 32px rgba(13, 71, 161, 0.3);
+        border: 1px solid rgba(128, 128, 128, 0.2);
     }
     .main-header h1 {
-        color: white;
         margin: 0;
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.5px;
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: var(--text-color);
     }
     .main-header p {
-        color: rgba(255,255,255,0.85);
+        opacity: 0.8;
         margin: 0.3rem 0 0 0;
-        font-size: 1rem;
-        font-weight: 300;
+        font-size: 0.95rem;
+        color: var(--text-color);
     }
 
-    /* Stat card styling */
     .stat-card {
-        background: linear-gradient(135deg, #1a1a2e, #16213e);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 12px;
-        padding: 1rem 1.2rem;
+        background: var(--secondary-background-color);
+        border: 1px solid rgba(128, 128, 128, 0.2);
+        border-radius: 8px;
+        padding: 1.25rem;
         text-align: center;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-        transition: transform 0.2s ease;
-    }
-    .stat-card:hover {
-        transform: translateY(-2px);
     }
     .stat-card .stat-value {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #42A5F5;
-        line-height: 1;
+        font-size: 1.5rem;
+        font-weight: 600;
+        line-height: 1.2;
+        color: var(--text-color);
     }
     .stat-card .stat-label {
-        font-size: 0.8rem;
-        color: rgba(255,255,255,0.6);
-        margin-top: 0.3rem;
+        font-size: 0.75rem;
+        opacity: 0.7;
+        margin-top: 0.5rem;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
+        color: var(--text-color);
     }
 
-    /* Algorithm result banner */
     .algo-result {
-        background: linear-gradient(135deg, #1B5E20, #2E7D32);
-        border-radius: 12px;
-        padding: 1rem 1.5rem;
+        background: var(--secondary-background-color);
+        border-radius: 6px;
+        padding: 1rem 1.25rem;
         margin: 0.5rem 0;
-        border-left: 4px solid #69F0AE;
+        border-left: 4px solid #3b82f6; 
     }
     .algo-result.warning {
-        background: linear-gradient(135deg, #E65100, #F57C00);
-        border-left-color: #FFD54F;
+        border-left-color: #ef4444; 
     }
     .algo-result h4 {
-        color: white;
         margin: 0 0 0.3rem 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-color);
     }
     .algo-result p {
-        color: rgba(255,255,255,0.9);
+        opacity: 0.9;
         margin: 0;
+        font-size: 0.9rem;
+        color: var(--text-color);
     }
 
-    /* Edge table */
     .edge-table {
         width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        border-radius: 8px;
+        border-collapse: collapse;
+        border-radius: 6px;
         overflow: hidden;
+        border: 1px solid rgba(128, 128, 128, 0.2);
     }
     .edge-table th {
-        background: #1565C0;
-        color: white;
-        padding: 0.6rem 0.8rem;
+        background: rgba(128, 128, 128, 0.1);
+        padding: 0.75rem 1rem;
         font-weight: 600;
         font-size: 0.85rem;
+        text-align: left;
+        color: var(--text-color);
     }
     .edge-table td {
-        padding: 0.5rem 0.8rem;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 0.75rem 1rem;
+        border-top: 1px solid rgba(128, 128, 128, 0.2);
         font-size: 0.85rem;
+        color: var(--text-color);
     }
 
-    /* Section divider */
     .section-divider {
         border: none;
         height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(66,165,245,0.4), transparent);
+        background: rgba(128, 128, 128, 0.2);
         margin: 1.5rem 0;
     }
     
-    /* Sidebar section headers */
     .sidebar-section {
-        background: rgba(255,255,255,0.05);
-        border-radius: 8px;
-        padding: 0.8rem;
-        margin: 0.5rem 0;
-        border-left: 3px solid #42A5F5;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+        color: var(--text-color);
+        opacity: 0.9;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -184,7 +179,7 @@ net: NetworkGraph = st.session_state.net
 # ═══════════════════════════════════════════════════════════════════════
 st.markdown("""
 <div class="main-header">
-    <h1>🌐 Network Packet Routing Simulator</h1>
+    <h1>Network Packet Routing Simulator</h1>
     <p>Interactive visualization of graph topologies, MST, and shortest-path routing</p>
 </div>
 """, unsafe_allow_html=True)
@@ -193,17 +188,17 @@ st.markdown("""
 # Sidebar — Controls
 # ═══════════════════════════════════════════════════════════════════════
 with st.sidebar:
-    st.markdown("## ⚙️ Network Controls")
+    st.markdown("## Network Controls")
 
     # ── Preset Topologies ──────────────────────────────────────────────
-    st.markdown('<div class="sidebar-section"><b>📐 Preset Topologies</b></div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-section">Preset Topologies</div>', unsafe_allow_html=True)
     topo_col1, topo_col2 = st.columns(2)
     with topo_col1:
         preset = st.selectbox("Topology", ["Ring", "Star", "Mesh", "Tree", "Random"], label_visibility="collapsed")
     with topo_col2:
         n_nodes = st.number_input("Nodes", min_value=3, max_value=20, value=6, step=1)
 
-    if st.button("🔄 Generate Topology", use_container_width=True, type="primary"):
+    if st.button("Generate Topology", use_container_width=True, type="primary"):
         if preset == "Ring":
             net.generate_ring_topology(n_nodes)
         elif preset == "Star":
@@ -228,7 +223,7 @@ with st.sidebar:
     
     # ── Custom Coordinate-Based Input ──────────────────────────────────
     st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
-    st.markdown('<div class="sidebar-section"><b>📍 Custom Coordinate Network</b></div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-section">Custom Coordinate Network</div>', unsafe_allow_html=True)
 
     node_input = st.text_area(
         "Nodes (format: name x y)",
@@ -259,7 +254,7 @@ with st.sidebar:
                 edges.append((parts[0], parts[1]))
         return edges
 
-    if st.button("📍 Generate Custom Network", use_container_width=True):
+    if st.button("Generate Custom Network", use_container_width=True):
         try:
             nodes = parse_nodes(node_input)
             edges = parse_edges(edge_input)
@@ -278,7 +273,7 @@ with st.sidebar:
                 st.session_state.show_sp = False
                 st.session_state.failure_report = None
 
-                st.success("✅ Custom network generated!")
+                st.success("Custom network generated.")
                 st.rerun()
 
         except Exception as e:
@@ -290,15 +285,15 @@ with st.sidebar:
 
 
     # ── Manual Node/Edge Addition ──────────────────────────────────────
-    st.markdown('<div class="sidebar-section"><b>➕ Add Router</b></div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-section">Add Router</div>', unsafe_allow_html=True)
     new_router = st.text_input("Router ID (e.g., R7)", key="new_router_input")
     if st.button("Add Router", use_container_width=True):
         if new_router.strip():
             net.add_router(new_router.strip())
-            st.success(f"✅ Router '{new_router.strip()}' added!")
+            st.success(f"Router '{new_router.strip()}' added.")
             st.rerun()
 
-    st.markdown('<div class="sidebar-section"><b>🔗 Add Link</b></div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-section">Add Link</div>', unsafe_allow_html=True)
     routers = net.get_routers()
     if len(routers) >= 2:
         link_col1, link_col2 = st.columns(2)
@@ -309,7 +304,7 @@ with st.sidebar:
         link_weight = st.slider("Weight (Latency)", min_value=1, max_value=50, value=5)
         if st.button("Add Link", use_container_width=True):
             net.add_link(link_a, link_b, weight=link_weight)
-            st.success(f"✅ Link {link_a} ↔ {link_b} (w={link_weight}) added!")
+            st.success(f"Link {link_a} ↔ {link_b} (w={link_weight}) added.")
             st.rerun()
     else:
         st.info("Add at least 2 routers to create links.")
@@ -317,7 +312,7 @@ with st.sidebar:
     st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
 
     # ── Remove Router / Link ───────────────────────────────────────────
-    st.markdown('<div class="sidebar-section"><b>🗑️ Remove Elements</b></div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-section">Remove Elements</div>', unsafe_allow_html=True)
     if routers:
         rm_router = st.selectbox("Remove Router", routers, key="rm_router")
         if st.button("Remove Router", use_container_width=True):
@@ -340,7 +335,7 @@ with st.sidebar:
     st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
 
     # ── Clear All ──────────────────────────────────────────────────────
-    if st.button("🧹 Clear Entire Network", use_container_width=True):
+    if st.button("Clear Entire Network", use_container_width=True):
         net.clear()
         st.session_state.mst_edges = []
         st.session_state.shortest_path = []
@@ -354,8 +349,8 @@ with st.sidebar:
     st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
 
     # ── JSON Import / Export ───────────────────────────────────────────
-    st.markdown('<div class="sidebar-section"><b>💾 Import / Export</b></div>', unsafe_allow_html=True)
-    if st.button("📥 Export as JSON", use_container_width=True):
+    st.markdown('<div class="sidebar-section">Import / Export</div>', unsafe_allow_html=True)
+    if st.button("Export as JSON", use_container_width=True):
         data = net.to_dict()
         st.download_button(
             "Download JSON",
@@ -364,7 +359,7 @@ with st.sidebar:
             mime="application/json",
             use_container_width=True,
         )
-    uploaded = st.file_uploader("📤 Import JSON", type=["json"])
+    uploaded = st.file_uploader("Import JSON", type=["json"])
     if uploaded:
         try:
             data = json.load(uploaded)
@@ -382,11 +377,11 @@ with st.sidebar:
 if net.graph.number_of_nodes() == 0:
     st.markdown("""
     <div style="text-align:center; padding:4rem 2rem;">
-        <h2 style="color: #42A5F5;">Welcome to the Simulator!</h2>
-        <p style="color: rgba(255,255,255,0.7); font-size: 1.1rem;">
+        <h2>Welcome to the Simulator</h2>
+        <p style="opacity: 0.7; font-size: 1.1rem;">
             Use the sidebar to generate a preset topology or manually build your network.
         </p>
-        <p style="font-size: 3rem; margin-top: 1rem;">🌐🔗📡</p>
+        
     </div>
     """, unsafe_allow_html=True)
     st.stop()
@@ -395,17 +390,16 @@ if net.graph.number_of_nodes() == 0:
 stats = net.get_network_stats()
 stat_cols = st.columns(5)
 stat_items = [
-    ("🖥️", str(stats["num_routers"]), "Routers"),
-    ("🔗", str(stats["num_links"]), "Links"),
-    ("📊", f"{stats.get('avg_degree', 0):.1f}", "Avg Degree"),
-    ("🔌", "Yes" if stats["is_connected"] else "No", "Connected"),
-    ("🧮", f"{stats.get('density', 0):.2f}", "Density"),
+    (str(stats["num_routers"]), "Routers"),
+    (str(stats["num_links"]), "Links"),
+    (f"{stats.get('avg_degree', 0):.1f}", "Avg Degree"),
+    ("Yes" if stats["is_connected"] else "No", "Connected"),
+    (f"{stats.get('density', 0):.2f}", "Density"),
 ]
-for col, (icon, value, label) in zip(stat_cols, stat_items):
+for col, (value, label) in zip(stat_cols, stat_items):
     with col:
         st.markdown(f"""
         <div class="stat-card">
-            <div style="font-size:1.5rem;">{icon}</div>
             <div class="stat-value">{value}</div>
             <div class="stat-label">{label}</div>
         </div>
@@ -417,7 +411,7 @@ st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
 algo_col1, algo_col2, algo_col3 = st.columns(3)
 
 with algo_col1:
-    st.markdown("### 🌲 Minimum Spanning Tree")
+    st.markdown("### Minimum Spanning Tree")
     mst_algo = st.radio("Algorithm", ["Kruskal", "Prim"], horizontal=True, key="mst_algo_radio")
     if st.button("Compute MST", use_container_width=True, type="primary"):
         try:
@@ -427,7 +421,7 @@ with algo_col1:
             total_w = net.get_mst_total_weight(algorithm=mst_algo.lower())
             st.markdown(f"""
             <div class="algo-result">
-                <h4>🌲 MST Computed ({mst_algo})</h4>
+                <h4>MST Computed ({mst_algo})</h4>
                 <p>Edges: {len(mst_edges)} &nbsp;|&nbsp; Total Weight: {total_w}</p>
             </div>
             """, unsafe_allow_html=True)
@@ -435,7 +429,7 @@ with algo_col1:
             st.error(f"MST computation failed: {e}")
 
 with algo_col2:
-    st.markdown("### ⚡ Shortest Path (Dijkstra)")
+    st.markdown("### Shortest Path (Dijkstra)")
     if len(routers) >= 2:
         sp_src = st.selectbox("Source", routers, key="sp_src")
         sp_dst = st.selectbox("Destination", [r for r in routers if r != sp_src], key="sp_dst")
@@ -447,14 +441,14 @@ with algo_col2:
                 st.session_state.show_sp = True
                 st.markdown(f"""
                 <div class="algo-result">
-                    <h4>⚡ Path Found!</h4>
+                    <h4>Path Found</h4>
                     <p>Route: {' → '.join(path)}<br>Total Cost: {cost}</p>
                 </div>
                 """, unsafe_allow_html=True)
             else:
                 st.markdown(f"""
                 <div class="algo-result warning">
-                    <h4>❌ No Path Found</h4>
+                    <h4>No Path Found</h4>
                     <p>{sp_src} and {sp_dst} are not connected.</p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -462,7 +456,7 @@ with algo_col2:
         st.info("Need at least 2 routers.")
 
 with algo_col3:
-    st.markdown("### 💥 Link Failure Simulation")
+    st.markdown("### Link Failure Simulation")
     if links:
         fail_options = [f"{u} ↔ {v} (w={w})" for u, v, w in links]
         fail_idx = st.selectbox("Link to Fail", range(len(links)), format_func=lambda i: fail_options[i], key="fail_link")
@@ -475,15 +469,15 @@ with algo_col3:
             if report.get("disconnected_pairs"):
                 st.markdown(f"""
                 <div class="algo-result warning">
-                    <h4>💥 Link {u} ↔ {v} Failed!</h4>
-                    <p>⚠️ {len(report['disconnected_pairs'])} pair(s) became disconnected!</p>
+                    <h4>Link {u} ↔ {v} Failed</h4>
+                    <p>{len(report['disconnected_pairs'])} pair(s) became disconnected.</p>
                 </div>
                 """, unsafe_allow_html=True)
             else:
                 st.markdown(f"""
                 <div class="algo-result">
-                    <h4>💥 Link {u} ↔ {v} Failed!</h4>
-                    <p>✅ Network remains fully connected. MST was recalculated.</p>
+                    <h4>Link {u} ↔ {v} Failed</h4>
+                    <p>Network remains fully connected. MST was recalculated.</p>
                 </div>
                 """, unsafe_allow_html=True)
     else:
@@ -494,7 +488,7 @@ st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
 # ── Visualization Toggle ───────────────────────────────────────────────
 viz_col1, viz_col2 = st.columns([3, 1])
 with viz_col1:
-    st.markdown("### 🗺️ Network Topology Visualization")
+    st.markdown("### Network Topology Visualization")
 with viz_col2:
     viz_mode = st.radio("Renderer", ["Interactive (PyVis)", "Static (Matplotlib)"], horizontal=True, label_visibility="collapsed")
 
@@ -534,7 +528,7 @@ st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
 detail_col1, detail_col2 = st.columns(2)
 
 with detail_col1:
-    st.markdown("### 📋 Edge Table")
+    st.markdown("### Edge Table")
     if links:
         table_html = '<table class="edge-table"><tr><th>#</th><th>From</th><th>To</th><th>Weight</th></tr>'
         for i, (u, v, w) in enumerate(links, 1):
@@ -546,7 +540,7 @@ with detail_col1:
 
 with detail_col2:
     if st.session_state.show_mst and st.session_state.mst_edges:
-        st.markdown("### 🌲 MST Edges")
+        st.markdown("### MST Edges")
         mst_table = '<table class="edge-table"><tr><th>#</th><th>From</th><th>To</th><th>Weight</th></tr>'
         for i, (u, v, w) in enumerate(st.session_state.mst_edges, 1):
             mst_table += f"<tr><td>{i}</td><td>{u}</td><td>{v}</td><td>{w}</td></tr>"
@@ -555,7 +549,7 @@ with detail_col2:
         st.markdown(f"**Total MST Weight:** {sum(w for _,_,w in st.session_state.mst_edges)}")
 
     if st.session_state.show_sp and st.session_state.shortest_path:
-        st.markdown("### ⚡ Shortest Path Details")
+        st.markdown("### Shortest Path Details")
         path = st.session_state.shortest_path
         st.markdown(f"**Route:** {' → '.join(path)}")
         st.markdown(f"**Hops:** {len(path) - 1}")
@@ -563,7 +557,7 @@ with detail_col2:
 
     if st.session_state.failure_report:
         report = st.session_state.failure_report
-        st.markdown("### 💥 Failure Impact Report")
+        st.markdown("### Failure Impact Report")
         u, v, w = report["removed_edge"]
         st.markdown(f"**Failed Link:** {u} ↔ {v} (weight: {w})")
         if report["disconnected_pairs"]:
