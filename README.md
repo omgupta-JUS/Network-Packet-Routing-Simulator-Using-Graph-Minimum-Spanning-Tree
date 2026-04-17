@@ -137,10 +137,11 @@ python -m pytest tests/ -v
 
 | Member | Role |
 |--------|------|
-| *Om Gupta* | *[Role/Contribution]* |
-| *Tirunagari Bhuvan* | *[Role/Contribution]* |
-| *Gyan Vardhan Chauhan* | *[Role/Contribution]* |
-| *Nitesh* | *[Role/Contribution]* |
+| *Om Gupta* | *Core graph engine design, Kruskal's & Prim's MST implementation, Architecture & code structure* |
+| *Tirunagari Bhuvan* | *Dijkstra's shortest path, Link failure simulation logic, Unit testing with pytest* |
+| *Gyan Vardhan Chauhan* | *Streamlit interface & sidebar, Topology generators, JSON import/export module* |
+| *Nitesh* | *PyVis interactive rendering, Matplotlib static exports, Network statistics dashboard* |
+
 ---
 
 ##  License
