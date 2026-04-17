@@ -39,6 +39,28 @@ st.set_page_config(
 # ═══════════════════════════════════════════════════════════════════════
 st.markdown("""
 <style>
+
+    /* Night Sky Background */
+    [data-testid="stAppViewContainer"] {
+        background-color: #0b101e !important;
+        background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 4px),
+                          radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 3px),
+                          radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 4px),
+                          radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 1px, transparent 3px);
+        background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
+        background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+        background-attachment: fixed;
+    }
+    
+    [data-testid="stHeader"] {
+        background-color: transparent !important;
+    }
+    
+    [data-testid="stSidebar"] {
+        background-color: rgba(11, 16, 30, 0.95) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
     html, body, [class*="css"] {
@@ -46,28 +68,31 @@ st.markdown("""
     }
 
     .main-header {
-        background: var(--secondary-background-color);
-        padding: 1.5rem 2rem;
-        border-radius: 8px;
+        background: transparent;
+        padding: 1.5rem 0;
         margin-bottom: 1.5rem;
-        border: 1px solid rgba(128, 128, 128, 0.2);
+        border: none;
+        text-align: center;
     }
     .main-header h1 {
         margin: 0;
-        font-size: 1.75rem;
-        font-weight: 600;
-        color: var(--text-color);
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #f1f5f9;
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
     }
     .main-header p {
-        opacity: 0.8;
-        margin: 0.3rem 0 0 0;
-        font-size: 0.95rem;
-        color: var(--text-color);
+        opacity: 0.9;
+        margin: 0.5rem 0 0 0;
+        font-size: 1.1rem;
+        color: #e2e8f0;
+        text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
     }
 
     .stat-card {
-        background: var(--secondary-background-color);
-        border: 1px solid rgba(128, 128, 128, 0.2);
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 8px;
         padding: 1.25rem;
         text-align: center;
@@ -76,7 +101,7 @@ st.markdown("""
         font-size: 1.5rem;
         font-weight: 600;
         line-height: 1.2;
-        color: var(--text-color);
+        color: #f1f5f9;
     }
     .stat-card .stat-label {
         font-size: 0.75rem;
@@ -84,11 +109,12 @@ st.markdown("""
         margin-top: 0.5rem;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        color: var(--text-color);
+        color: #f1f5f9;
     }
 
     .algo-result {
-        background: var(--secondary-background-color);
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(10px);
         border-radius: 6px;
         padding: 1rem 1.25rem;
         margin: 0.5rem 0;
@@ -101,13 +127,13 @@ st.markdown("""
         margin: 0 0 0.3rem 0;
         font-size: 1rem;
         font-weight: 600;
-        color: var(--text-color);
+        color: #f1f5f9;
     }
     .algo-result p {
         opacity: 0.9;
         margin: 0;
         font-size: 0.9rem;
-        color: var(--text-color);
+        color: #f1f5f9;
     }
 
     .edge-table {
@@ -115,27 +141,27 @@ st.markdown("""
         border-collapse: collapse;
         border-radius: 6px;
         overflow: hidden;
-        border: 1px solid rgba(128, 128, 128, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }
     .edge-table th {
-        background: rgba(128, 128, 128, 0.1);
+        background: rgba(255, 255, 255, 0.05);
         padding: 0.75rem 1rem;
         font-weight: 600;
         font-size: 0.85rem;
         text-align: left;
-        color: var(--text-color);
+        color: #f1f5f9;
     }
     .edge-table td {
         padding: 0.75rem 1rem;
-        border-top: 1px solid rgba(128, 128, 128, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
         font-size: 0.85rem;
-        color: var(--text-color);
+        color: #f1f5f9;
     }
 
     .section-divider {
         border: none;
         height: 1px;
-        background: rgba(128, 128, 128, 0.2);
+        background: rgba(255, 255, 255, 0.1);
         margin: 1.5rem 0;
     }
     
@@ -145,8 +171,8 @@ st.markdown("""
         padding: 0.5rem 0;
         margin-top: 1rem;
         margin-bottom: 0.5rem;
-        border-bottom: 1px solid rgba(128, 128, 128, 0.2);
-        color: var(--text-color);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: #f1f5f9;
         opacity: 0.9;
     }
 </style>
@@ -190,94 +216,91 @@ st.markdown("""
 with st.sidebar:
     st.markdown("## Network Controls")
 
-    # ── Preset Topologies ──────────────────────────────────────────────
-    st.markdown('<div class="sidebar-section">Preset Topologies</div>', unsafe_allow_html=True)
-    topo_col1, topo_col2 = st.columns(2)
-    with topo_col1:
-        preset = st.selectbox("Topology", ["Ring", "Star", "Mesh", "Tree", "Random"], label_visibility="collapsed")
-    with topo_col2:
-        n_nodes = st.number_input("Nodes", min_value=3, max_value=20, value=6, step=1)
-
-    if st.button("Generate Topology", use_container_width=True, type="primary"):
-        if preset == "Ring":
-            net.generate_ring_topology(n_nodes)
-        elif preset == "Star":
-            net.generate_star_topology(n_nodes)
-        elif preset == "Mesh":
-            net.generate_mesh_topology(n_nodes)
-        elif preset == "Tree":
-            net.generate_tree_topology(depth=3, branching=2)
-        elif preset == "Random":
-            net.generate_random_topology(n_nodes)
-        # Reset highlights
-        st.session_state.mst_edges = []
-        st.session_state.shortest_path = []
-        st.session_state.shortest_cost = 0
-        st.session_state.failed_edges = []
-        st.session_state.show_mst = False
-        st.session_state.show_sp = False
-        st.session_state.failure_report = None
-        st.rerun()
-
+    # ── Topology Generation Modes ─────────────────────────────────────
+    gen_mode = st.radio("Generation Mode", ["Preset Topologies", "Custom Coordinate Network"])
     st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
-    
-    # ── Custom Coordinate-Based Input ──────────────────────────────────
-    st.markdown("<hr class='section-divider'>", unsafe_allow_html=True)
-    st.markdown('<div class="sidebar-section">Custom Coordinate Network</div>', unsafe_allow_html=True)
 
-    node_input = st.text_area(
-        "Nodes (format: name x y)",
-        placeholder="A 10 20\nB 40 50\nC 70 10",
-        key="custom_nodes"
-    )
+    if gen_mode == "Preset Topologies":
+        st.markdown('<div class="sidebar-section">Preset Topologies</div>', unsafe_allow_html=True)
+        topo_col1, topo_col2 = st.columns(2)
+        with topo_col1:
+            preset = st.selectbox("Topology", ["Ring", "Star", "Mesh", "Tree", "Random"], label_visibility="collapsed")
+        with topo_col2:
+            n_nodes = st.number_input("Nodes", min_value=3, max_value=20, value=6, step=1)
 
-    edge_input = st.text_area(
-        "Edges (format: A B)",
-        placeholder="A B\nB C\nA C",
-        key="custom_edges"
-    )
+        if st.button("Generate Topology", use_container_width=True, type="primary"):
+            if preset == "Ring":
+                net.generate_ring_topology(n_nodes)
+            elif preset == "Star":
+                net.generate_star_topology(n_nodes)
+            elif preset == "Mesh":
+                net.generate_mesh_topology(n_nodes)
+            elif preset == "Tree":
+                net.generate_tree_topology(depth=3, branching=2)
+            elif preset == "Random":
+                net.generate_random_topology(n_nodes)
+            # Reset highlights
+            st.session_state.mst_edges = []
+            st.session_state.shortest_path = []
+            st.session_state.shortest_cost = 0
+            st.session_state.failed_edges = []
+            st.session_state.show_mst = False
+            st.session_state.show_sp = False
+            st.session_state.failure_report = None
+            st.rerun()
 
-    def parse_nodes(text):
-        nodes = []
-        for line in text.strip().split("\n"):
-            parts = line.strip().split()
-            if len(parts) == 3:
-                name, x, y = parts
-                nodes.append((name, float(x), float(y)))
-        return nodes
+    else:
+        st.markdown('<div class="sidebar-section">Custom Coordinate Network</div>', unsafe_allow_html=True)
+        node_input = st.text_area(
+            "Nodes (format: name x y)",
+            placeholder="A 10 20\nB 40 50\nC 70 10",
+            key="custom_nodes"
+        )
 
-    def parse_edges(text):
-        edges = []
-        for line in text.strip().split("\n"):
-            parts = line.strip().split()
-            if len(parts) == 2:
-                edges.append((parts[0], parts[1]))
-        return edges
+        edge_input = st.text_area(
+            "Edges (format: A B)",
+            placeholder="A B\nB C\nA C",
+            key="custom_edges"
+        )
 
-    if st.button("Generate Custom Network", use_container_width=True):
-        try:
-            nodes = parse_nodes(node_input)
-            edges = parse_edges(edge_input)
+        def parse_nodes(text):
+            nodes = []
+            for line in text.strip().split("\n"):
+                parts = line.strip().split()
+                if len(parts) == 3:
+                    name, x, y = parts
+                    nodes.append((name, float(x), float(y)))
+            return nodes
 
-            if not nodes:
-                st.warning("Please enter valid node data.")
-            else:
-                net.build_from_coordinates(nodes, edges)
+        def parse_edges(text):
+            edges = []
+            for line in text.strip().split("\n"):
+                parts = line.strip().split()
+                if len(parts) == 2:
+                    edges.append((parts[0], parts[1]))
+            return edges
 
-                # Reset previous results
-                st.session_state.mst_edges = []
-                st.session_state.shortest_path = []
-                st.session_state.shortest_cost = 0
-                st.session_state.failed_edges = []
-                st.session_state.show_mst = False
-                st.session_state.show_sp = False
-                st.session_state.failure_report = None
+        if st.button("Generate Custom Network", use_container_width=True):
+            try:
+                nodes = parse_nodes(node_input)
+                edges = parse_edges(edge_input)
 
-                st.success("Custom network generated.")
-                st.rerun()
-
-        except Exception as e:
-            st.error(f"Error: {e}")
+                if not nodes:
+                    st.warning("Please enter valid node data.")
+                else:
+                    net.build_from_coordinates(nodes, edges)
+                    # Reset previous results
+                    st.session_state.mst_edges = []
+                    st.session_state.shortest_path = []
+                    st.session_state.shortest_cost = 0
+                    st.session_state.failed_edges = []
+                    st.session_state.show_mst = False
+                    st.session_state.show_sp = False
+                    st.session_state.failure_report = None
+                    st.success("Custom network generated.")
+                    st.rerun()
+            except Exception as e:
+                st.error(f"Error: {e}")
         
 
 
