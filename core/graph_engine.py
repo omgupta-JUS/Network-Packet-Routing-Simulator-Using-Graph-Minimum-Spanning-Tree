@@ -55,7 +55,7 @@ class NetworkGraph:
 
     def assign_distance_weights(self):
         """
-        Assign edge weights based on Euclidean distance between node positions.
+        Assign edge weights based on Euclidean distance between node positions
         """
         for u, v in self.graph.edges:
             x1, y1 = self.graph.nodes[u].get("pos", (0, 0))
