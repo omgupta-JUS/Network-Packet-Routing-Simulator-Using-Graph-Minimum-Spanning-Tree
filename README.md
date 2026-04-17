@@ -92,7 +92,7 @@ The app will open at `http://localhost:8501` in your default browser.
 |----------|--------|-------------|
 | **Ring** | ⭕ | Each router connects to exactly 2 neighbors in a circle |
 | **Star** | ⭐ | One central hub connects to all others |
-| **Mesh** | 🔗 | Every router connects to every other (full mesh) |
+| **Mesh** | 🔗 | Each router is directly connected to all others (full mesh topology) |
 | **Tree** | 🌳 | Hierarchical structure with a root and branching |
 | **Random** | 🎲 | Erdős–Rényi random graph (guaranteed connected) |
 
@@ -107,7 +107,7 @@ The app will open at `http://localhost:8501` in your default browser.
 5. **Simulate Failure**: Select a link and click "Simulate Failure" to see which node pairs become disconnected.
 6. **Toggle Renderer**: Switch between interactive PyVis and static Matplotlib views.
 7. **Export/Import**: Save your topology as JSON or load a previously saved one.
-
+8. **Compare Algorithms**: Run both Kruskal and Prim on the same network to observe differences in MST construction.
 ---
 
 ##  Testing
